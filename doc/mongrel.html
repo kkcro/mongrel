@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Module mongrel</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module mongrel</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Mongrel API.
+<p>Copyright © 2012-2013 CA Meijer</p>
+
+<p><b>Behaviours:</b> <a href="gen_server.html"><tt>gen_server</tt></a>.</p>
+<p><b>Authors:</b> CA Meijer.</p>
+
+<h2><a name="description">Description</a></h2>Mongrel API. This module provides functions for creating, reading, updating and deleting
+        documents. The functions exposed are similar to the CRUD functions exposed by the
+        mongo API of the MongoDB driver. While the mongo functions take collection and document
+        arguments, the mongrel functions expect one or more records as arguments.
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#count-1">count/1</a></td><td>Counts the number of documents that match some selector.</td></tr>
+<tr><td valign="top"><a href="#count-2">count/2</a></td><td>Counts the number of documents that match some selector up to a specified
+       maximum.</td></tr>
+<tr><td valign="top"><a href="#delete-1">delete/1</a></td><td>Deletes all documents that match a selector.</td></tr>
+<tr><td valign="top"><a href="#delete_one-1">delete_one/1</a></td><td>Deletes the first document that matches a selector.</td></tr>
+<tr><td valign="top"><a href="#do-5">do/5</a></td><td>Executes an 'action' using the specified read and write modes to a database using a connection.</td></tr>
+<tr><td valign="top"><a href="#find-1">find/1</a></td><td>Finds all documents that match a selector and returns a cursor.</td></tr>
+<tr><td valign="top"><a href="#find-2">find/2</a></td><td>Finds all documents that match a selector and returns a cursor
+       of a projection.</td></tr>
+<tr><td valign="top"><a href="#find-3">find/3</a></td><td>Finds all documents that match a selector and returns a cursor
+       of a projection result.</td></tr>
+<tr><td valign="top"><a href="#find-4">find/4</a></td><td>Finds all documents that match a selector and returns a cursor
+       of a projection result.</td></tr>
+<tr><td valign="top"><a href="#find_one-1">find_one/1</a></td><td>Finds the first document that matches a selector and returns the document as a record.</td></tr>
+<tr><td valign="top"><a href="#find_one-2">find_one/2</a></td><td>Finds the first document that matches a selector and returns a
+       projection of the document.</td></tr>
+<tr><td valign="top"><a href="#find_one-3">find_one/3</a></td><td>Finds a document that matches a selector and returns a
+       projection of the document after skipping a certain number of
+       matching documents.</td></tr>
+<tr><td valign="top"><a href="#get_connection_parameters-0">get_connection_parameters/0</a></td><td>Gets the parameters used to read from and write to the database.</td></tr>
+<tr><td valign="top"><a href="#insert-1">insert/1</a></td><td>Inserts a record into a collection with the same name as the record type.</td></tr>
+<tr><td valign="top"><a href="#insert_all-1">insert_all/1</a></td><td>Inserts a list of records into collections with the same name as the corresponding
+       record type.</td></tr>
+<tr><td valign="top"><a href="#modify-2">modify/2</a></td><td>Updates selected documents using a modifier.</td></tr>
+<tr><td valign="top"><a href="#replace-2">replace/2</a></td><td>Replaces the first document that matches the selector with a new document.</td></tr>
+<tr><td valign="top"><a href="#repsert-2">repsert/2</a></td><td>Replaces the first document that matches the selector with a new document.</td></tr>
+<tr><td valign="top"><a href="#save-1">save/1</a></td><td>Upserts a record into a collection with the same name as the record type.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="count-1">count/1</a></h3>
+<div class="spec">
+<p><tt>count(SelectorRecord::<a href="#type-record">record()</a>) -&gt; integer()</tt><br></p>
+</div><p>Counts the number of documents that match some selector.</p>
+
+<h3 class="function"><a name="count-2">count/2</a></h3>
+<div class="spec">
+<p><tt>count(SelectorRecord::<a href="#type-record">record()</a>, Limit::integer()) -&gt; integer()</tt><br></p>
+</div><p>Counts the number of documents that match some selector up to a specified
+       maximum. A limit of 0 means that all matching documents are counted.</p>
+
+<h3 class="function"><a name="delete-1">delete/1</a></h3>
+<div class="spec">
+<p><tt>delete(SelectorRecord::<a href="#type-record">record()</a>) -&gt; ok</tt><br></p>
+</div><p>Deletes all documents that match a selector.</p>
+
+<h3 class="function"><a name="delete_one-1">delete_one/1</a></h3>
+<div class="spec">
+<p><tt>delete_one(SelectorRecord::<a href="#type-record">record()</a>) -&gt; ok</tt><br></p>
+</div><p>Deletes the first document that matches a selector.</p>
+
+<h3 class="function"><a name="do-5">do/5</a></h3>
+<div class="spec">
+<p><tt>do(WriteMode::<a href="mongo.html#type-write_mode">mongo:write_mode()</a>, ReadMode::<a href="mongo.html#type-read_mode">mongo:read_mode()</a>, Connection::<a href="mongo.html#type-connection">mongo:connection()</a> | <a href="mongo.html#type-rs_connection">mongo:rs_connection()</a>, Database::<a href="mongo.html#type-db">mongo:db()</a>, Action::<a href="mongo.html#type-action">mongo:action()</a>) -&gt; {ok, any()} | {failure, any()}</tt><br></p>
+</div><p>Executes an 'action' using the specified read and write modes to a database using a connection.
+       An 'action' is a function that takes no arguments. The fun will usually invoke functions
+       to do inserts, finds, modifies, deletes, etc.</p>
+
+<h3 class="function"><a name="find-1">find/1</a></h3>
+<div class="spec">
+<p><tt>find(SelectorRecord::<a href="#type-record">record()</a>) -&gt; <a href="mongrel_cursor.html#type-cursor">mongrel_cursor:cursor()</a></tt><br></p>
+</div><p>Finds all documents that match a selector and returns a cursor.</p>
+
+<h3 class="function"><a name="find-2">find/2</a></h3>
+<div class="spec">
+<p><tt>find(SelectorRecord::<a href="#type-record">record()</a>, ProjectorRecord::<a href="#type-record">record()</a>) -&gt; <a href="mongrel_cursor.html#type-cursor">mongrel_cursor:cursor()</a></tt><br></p>
+</div><p>Finds all documents that match a selector and returns a cursor
+       of a projection. The projection can be passed as a mapped
+       record or as a Mongo tuple consisting of alternating keys and values.
+       An empty list ([]) indicates that the full projection of documents must
+       be returned.</p>
+
+<h3 class="function"><a name="find-3">find/3</a></h3>
+<div class="spec">
+<p><tt>find(SelectorRecord::<a href="#type-record">record()</a>, ProjectorRecord::<a href="#type-record">record()</a>, Skip::integer()) -&gt; <a href="mongrel_cursor.html#type-cursor">mongrel_cursor:cursor()</a></tt><br></p>
+</div><p>Finds all documents that match a selector and returns a cursor
+       of a projection result. A specified number of matching
+       documents are skipped.</p>
+
+<h3 class="function"><a name="find-4">find/4</a></h3>
+<div class="spec">
+<p><tt>find(SelectorRecord::<a href="#type-record">record()</a>, ProjectorRecord::<a href="#type-record">record()</a>, Skip::integer(), BatchSize::integer()) -&gt; <a href="mongrel_cursor.html#type-cursor">mongrel_cursor:cursor()</a></tt><br></p>
+</div><p>Finds all documents that match a selector and returns a cursor
+       of a projection result. A specified number of matching
+       documents are skipped.  The cursor retrieves results in the specified batch size.</p>
+
+<h3 class="function"><a name="find_one-1">find_one/1</a></h3>
+<div class="spec">
+<p><tt>find_one(SelectorRecord::<a href="#type-record">record()</a>) -&gt; <a href="#type-record">record()</a> | {}</tt><br></p>
+</div><p>Finds the first document that matches a selector and returns the document as a record.</p>
+
+<h3 class="function"><a name="find_one-2">find_one/2</a></h3>
+<div class="spec">
+<p><tt>find_one(SelectorRecord::<a href="#type-record">record()</a>, ProjectorRecord::<a href="#type-record">record()</a> | tuple()) -&gt; <a href="#type-record">record()</a> | {}</tt><br></p>
+</div><p>Finds the first document that matches a selector and returns a
+       projection of the document. The empty projection ([]) means
+       that all fields in the document are populated.  The projection can be
+       passed as a mapped record or as a MongoDB tuple consisting of alternating
+       keys and values.</p>
+
+<h3 class="function"><a name="find_one-3">find_one/3</a></h3>
+<div class="spec">
+<p><tt>find_one(SelectorRecord::<a href="#type-record">record()</a>, ProjectorRecord::<a href="#type-record">record()</a> | tuple(), Skip::integer()) -&gt; {<a href="#type-record">record()</a>}</tt><br></p>
+</div><p>Finds a document that matches a selector and returns a
+       projection of the document after skipping a certain number of
+       matching documents.</p>
+
+<h3 class="function"><a name="get_connection_parameters-0">get_connection_parameters/0</a></h3>
+<div class="spec">
+<p><tt>get_connection_parameters() -&gt; #mongrel_connection{}</tt><br></p>
+</div><p>Gets the parameters used to read from and write to the database.
+       It only makes sense to invoke this function from within the process
+       spawned by the do/5 function.</p>
+
+<h3 class="function"><a name="insert-1">insert/1</a></h3>
+<div class="spec">
+<p><tt>insert(Record::<a href="#type-record">record()</a>) -&gt; <a href="bson.html#type-value">bson:value()</a></tt><br></p>
+</div><p>Inserts a record into a collection with the same name as the record type. If the
+       record contains nested records with '_id' fields, the nested documents are upserted
+       into their appropriate collections as well. The ID of the inserted document is
+       returned.</p>
+
+<h3 class="function"><a name="insert_all-1">insert_all/1</a></h3>
+<div class="spec">
+<p><tt>insert_all(Records::[<a href="#type-record">record()</a>]) -&gt; [<a href="bson.html#type-value">bson:value()</a>]</tt><br></p>
+</div><p>Inserts a list of records into collections with the same name as the corresponding
+       record type. If a record contains nested records with '_id' fields, the nested documents are
+       upserted into their appropriate collections as well. A list of IDs of the inserted documents is
+       returned.</p>
+
+<h3 class="function"><a name="modify-2">modify/2</a></h3>
+<div class="spec">
+<p><tt>modify(SelectorRecord::<a href="#type-record">record()</a>, ModifierRecord::<a href="#type-record">record()</a>) -&gt; ok</tt><br></p>
+</div><p>Updates selected documents using a modifier. The modifier can be specified as a {key, value}
+       tuple where the key is a modifier and the value is a mapped record (e.g {'$set', #foo{bar=3}})
+       or as a mongo modifier tuple (e.g. {'$set', {bar, 3}).</p>
+
+<h3 class="function"><a name="replace-2">replace/2</a></h3>
+<div class="spec">
+<p><tt>replace(SelectorRecord::<a href="#type-record">record()</a>, NewRecord::<a href="#type-record">record()</a>) -&gt; ok</tt><br></p>
+</div><p>Replaces the first document that matches the selector with a new document.</p>
+
+<h3 class="function"><a name="repsert-2">repsert/2</a></h3>
+<div class="spec">
+<p><tt>repsert(SelectorRecord::<a href="#type-record">record()</a>, NewRecord::<a href="#type-record">record()</a>) -&gt; ok</tt><br></p>
+</div><p>Replaces the first document that matches the selector with a new document. If no
+       document can be matched, the new document is inserted.</p>
+
+<h3 class="function"><a name="save-1">save/1</a></h3>
+<div class="spec">
+<p><tt>save(Record::<a href="#type-record">record()</a>) -&gt; ok</tt><br></p>
+</div><p>Upserts a record into a collection with the same name as the record type. If the
+       record contains nested records with '_id' fields, the nested documents are upserted
+       into their appropriate collections as well.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Feb 4 2013, 15:17:24.</i></p>
+</body>
+</html>

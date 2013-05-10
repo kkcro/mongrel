@@ -1,0 +1,3 @@
+{packages,[]}.
+{modules,[mongrel,mongrel_app,mongrel_cursor,mongrel_mapper,mongrel_sup,
+          mongrel_types]}.

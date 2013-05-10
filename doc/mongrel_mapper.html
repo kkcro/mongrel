@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Module mongrel_mapper</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module mongrel_mapper</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Mongrel mapping server.
+<p>Copyright © 2012-2013 CA Meijer</p>
+
+<p><b>Behaviours:</b> <a href="gen_server.html"><tt>gen_server</tt></a>.</p>
+<p><b>Authors:</b> CA Meijer.</p>
+
+<h2><a name="description">Description</a></h2>Mongrel mapping server. This module exports functions to map records
+        to documents and to map documents to records. Additional functions
+        map records to selector, projection and modifier documents.
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#add_mapping-1">add_mapping/1</a></td><td>Specfies the field identifiers associated with a record name.</td></tr>
+<tr><td valign="top"><a href="#add_mappings-1">add_mappings/1</a></td><td>Specfies the field identifiers associated with a list of record names.</td></tr>
+<tr><td valign="top"><a href="#get_field-2">get_field/2</a></td><td>Gets the value of a field from a record.</td></tr>
+<tr><td valign="top"><a href="#get_mapping-1">get_mapping/1</a></td><td>Gets the field identifiers associated with a record name.</td></tr>
+<tr><td valign="top"><a href="#get_type-1">get_type/1</a></td><td>A convenience function that extracts the first element of a tuple.</td></tr>
+<tr><td valign="top"><a href="#has_id-1">has_id/1</a></td><td>Returns whether a record has an '_id' field.</td></tr>
+<tr><td valign="top"><a href="#is_mapped-1">is_mapped/1</a></td><td>Returns whether a record is mapped.</td></tr>
+<tr><td valign="top"><a href="#map-1">map/1</a></td><td>Maps a record to a document.</td></tr>
+<tr><td valign="top"><a href="#map_modifier-2">map_modifier/2</a></td><td>Maps a modifier specifying a field to modify in a BSON document.</td></tr>
+<tr><td valign="top"><a href="#map_projection-1">map_projection/1</a></td><td>Maps a projection specifying fields to select in a document.</td></tr>
+<tr><td valign="top"><a href="#map_selector-1">map_selector/1</a></td><td>Maps a selector specifying fields to match to a document.</td></tr>
+<tr><td valign="top"><a href="#set_field-4">set_field/4</a></td><td>Sets the value of a field in a record.</td></tr>
+<tr><td valign="top"><a href="#start_link-1">start_link/1</a></td><td>Spawns a registered process on the local node that stores the structure of records in an ETS table.</td></tr>
+<tr><td valign="top"><a href="#unmap-3">unmap/3</a></td><td>Unmaps a document to a record.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="add_mapping-1">add_mapping/1</a></h3>
+<div class="spec">
+<p><tt>add_mapping(RecordDescriptor::{atom(), FieldIds::[atom()]}) -&gt; ok</tt><br></p>
+</div><p>Specfies the field identifiers associated with a record name.</p>
+
+<h3 class="function"><a name="add_mappings-1">add_mappings/1</a></h3>
+<div class="spec">
+<p><tt>add_mappings(RecordDescriptorList::[{RecordName::atom(), FieldIds::[atom()]}]) -&gt; ok</tt><br></p>
+</div><p>Specfies the field identifiers associated with a list of record names.</p>
+
+<h3 class="function"><a name="get_field-2">get_field/2</a></h3>
+<div class="spec">
+<p><tt>get_field(Record::<a href="#type-record">record()</a>, Field::atom()) -&gt; any()</tt><br></p>
+</div><p>Gets the value of a field from a record.</p>
+
+<h3 class="function"><a name="get_mapping-1">get_mapping/1</a></h3>
+<div class="spec">
+<p><tt>get_mapping(RecordName::atom()) -&gt; [atom()]</tt><br></p>
+</div><p>Gets the field identifiers associated with a record name.</p>
+
+<h3 class="function"><a name="get_type-1">get_type/1</a></h3>
+<div class="spec">
+<p><tt>get_type(Record::<a href="#type-record">record()</a>) -&gt; atom()</tt><br></p>
+</div><p>A convenience function that extracts the first element of a tuple. If the
+       tuple is a record, the first element contains the record name.</p>
+
+<h3 class="function"><a name="has_id-1">has_id/1</a></h3>
+<div class="spec">
+<p><tt>has_id(RecordOrRecordName::atom() | tuple()) -&gt; boolean()</tt><br></p>
+</div><p>Returns whether a record has an '_id' field. The argument can be either an atom (a possible record name)
+       or a tuple (a possible record).</p>
+
+<h3 class="function"><a name="is_mapped-1">is_mapped/1</a></h3>
+<div class="spec">
+<p><tt>is_mapped(RecordOrRecordName::atom() | tuple()) -&gt; boolean()</tt><br></p>
+</div><p>Returns whether a record is mapped. The argument can be either an atom (a possible record name)
+       or a tuple (a possible record).</p>
+
+<h3 class="function"><a name="map-1">map/1</a></h3>
+<div class="spec">
+<p><tt>map(Record::<a href="#type-record">record()</a>) -&gt; {MappedRecord::{atom(), <a href="bson.html#type-document">bson:document()</a>}, NestedRecords::[{atom(), <a href="bson.html#type-document">bson:document()</a>}]}</tt><br></p>
+</div><p>Maps a record to a document. If the record contains child (nested) records, they are also mapped.
+       A mapped document is a 2-tuple consisting of the collection name and the document contents.</p>
+
+<h3 class="function"><a name="map_modifier-2">map_modifier/2</a></h3>
+<div class="spec">
+<p><tt>map_modifier(Collection::atom(), Modifier::{Key::atom(), <a href="#type-record">record()</a>}) -&gt; {Key::atom(), <a href="bson.html#type-document">bson:document()</a>, NestedDocuments::[<a href="bson.html#type-document">bson:document()</a>]}</tt><br></p>
+</div><p>Maps a modifier specifying a field to modify in a BSON document. A modifier is an atom
+       like '$set', '$inc', etc. The field can be specified as a record or as a MongoDB document.
+       Specifying the modifier as a document rather than a record is more concise and is
+       intended to be convenient. For consistency though, this convenient hack may be removed in
+       later releases of Mongrel.</p>
+
+<h3 class="function"><a name="map_projection-1">map_projection/1</a></h3>
+<div class="spec">
+<p><tt>map_projection(ProjectionRecord::<a href="#type-record">record()</a>) -&gt; <a href="bson.html#type-document">bson:document()</a></tt><br></p>
+</div><p>Maps a projection specifying fields to select in a document. Nested records are "flattened" using the
+       dot notation, e.g.
+       #foo{bar = #baz{x = 1}} is mapped to the document {'bar.x', 1}.</p>
+
+<h3 class="function"><a name="map_selector-1">map_selector/1</a></h3>
+<div class="spec">
+<p><tt>map_selector(SelectorRecord::<a href="#type-record">record()</a>) -&gt; {Collection::atom, <a href="bson.html#type-document">bson:document()</a>}</tt><br></p>
+</div><p>Maps a selector specifying fields to match to a document. Nested records are "flattened" using the
+       dot notation, e.g.
+       #foo{bar = #baz{x = 3}} is mapped to the document {'bar.x', 3}.</p>
+
+<h3 class="function"><a name="set_field-4">set_field/4</a></h3>
+<div class="spec">
+<p><tt>set_field(Record::<a href="#type-record">record()</a>, FieldId::atom(), FieldValue::any(), MapReferenceFun::function()) -&gt; <a href="#type-record">record()</a></tt><br></p>
+</div><p>Sets the value of a field in a record. If the value is a reference to a document,
+       a callback function is invoked to map the referenced document to a record. An updated record
+       is returned.</p>
+
+<h3 class="function"><a name="start_link-1">start_link/1</a></h3>
+<div class="spec">
+<p><tt>start_link(EtsTableId::integer()) -&gt; {ok, pid()}</tt><br></p>
+</div><p>Spawns a registered process on the local node that stores the structure of records in an ETS table.
+ </p>
+
+<h3 class="function"><a name="unmap-3">unmap/3</a></h3>
+<div class="spec">
+<p><tt>unmap(RecordName::atom(), Document::<a href="bson.html#type-document">bson:document()</a>, MapReferenceFun::function()) -&gt; <a href="#type-record">record()</a></tt><br></p>
+</div><p>Unmaps a document to a record. If the document references nested documents, a callback function
+       is called to unmap the nested documents.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Feb 4 2013, 15:17:24.</i></p>
+</body>
+</html>
