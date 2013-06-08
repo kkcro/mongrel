@@ -169,7 +169,7 @@ get_connection_parameters() ->
 -spec(insert(record()) -> bson:value()).
 insert(Record) ->
 	{{Collection, Document}, ChildDocuments} = mongrel_mapper:map(Record),
-	[mongo:save(ChildCollection, ChildDocument) || {ChildCollection, ChildDocument} <- ChildDocuments],
+	[mongo:insert(ChildCollection, ChildDocument) || {ChildCollection, ChildDocument} <- ChildDocuments],
 	mongo:insert(Collection, Document).
 
 %% @doc Inserts a list of records into collections with the same name as the corresponding
@@ -204,8 +204,7 @@ replace(SelectorRecord, NewRecord) ->
 repsert(SelectorRecord, NewRecord) ->
 	{{Collection, NewDocument}, ChildDocuments} = mongrel_mapper:map(NewRecord),
 	{Collection, Selector} = mongrel_mapper:map_selector(SelectorRecord),
-	mongo:repsert(Collection, Selector, NewDocument),
-	[mongo:save(ChildCollection, ChildDocument) || {ChildCollection, ChildDocument} <- ChildDocuments].
+	mongo:update(Collection, Selector, NewDocument).
 	
 %% @doc Upserts a record into a collection with the same name as the record type. If the 
 %%      record contains nested records with '_id' fields, the nested documents are upserted
